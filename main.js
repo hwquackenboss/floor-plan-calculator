@@ -3,8 +3,12 @@ function getFloorCheckboxes(floorPrefix) {
             const unfinishedRooms = [];
 
             // Special areas
-            if (document.getElementById(`${floorPrefix}-attic`).checked) specialAreas.push('attic');
-            if (document.getElementById(`${floorPrefix}-open-below`).checked) specialAreas.push('open to below area');
+             // Special areas - check if element exists before accessing it
+            const atticCheckbox = document.getElementById(`${floorPrefix}-attic`);
+            const openBelowCheckbox = document.getElementById(`${floorPrefix}-open-below`);
+            
+            if (atticCheckbox && atticCheckbox.checked) specialAreas.push('attic');
+            if (openBelowCheckbox && openBelowCheckbox.checked) specialAreas.push('open to below area');
             if (document.getElementById(`${floorPrefix}-under-five`).checked) specialAreas.push('area under five feet in height');
             if (document.getElementById(`${floorPrefix}-crawlspace`).checked) specialAreas.push('crawlspace');
             if (document.getElementById(`${floorPrefix}-shed`).checked) specialAreas.push('shed');
@@ -129,23 +133,23 @@ I got the following measurements:
             if (floors.main.total > 0) {
                 const mainGaragePresent = floors.main.total > floors.main.noGarage;
                 template += generateFloorDescription('Main', floors.main, mainGaragePresent, 
-                    mainCheckboxes.specialAreas, mainCheckboxes.unfinishedRooms) + '\n';
+                    mainCheckboxes.specialAreas, mainCheckboxes.unfinishedRooms) + '\n\n';
             }
             if (floors.upper.total > 0) {
                 template += generateFloorDescription('Upper', floors.upper, false, 
-                    upperCheckboxes.specialAreas, upperCheckboxes.unfinishedRooms) + '\n';
+                    upperCheckboxes.specialAreas, upperCheckboxes.unfinishedRooms) + '\n\n';
             }
             if (floors.top.total > 0) {
                 template += generateFloorDescription('Top', floors.top, false, 
-                    topCheckboxes.specialAreas, topCheckboxes.unfinishedRooms) + '\n';
+                    topCheckboxes.specialAreas, topCheckboxes.unfinishedRooms) + '\n\n';
             }
             if (floors.lower.total > 0) {
                 const lowerGaragePresent = floors.lower.total > floors.lower.noGarage;
                 template += generateFloorDescription('Lower', floors.lower, lowerGaragePresent, 
-                    lowerCheckboxes.specialAreas, lowerCheckboxes.unfinishedRooms) + '\n';
+                    lowerCheckboxes.specialAreas, lowerCheckboxes.unfinishedRooms) + '\n\n';
             }
 
-            template += `\n
+            template += `
 Approx. ${totalAllFloorsNoGarage} sq. ft. This includes all areas of all levels excluding the garage.\n
 Above Ground Total Square Footage - Approx. ${aboveGroundTotal} sq. ft. \n
 Below Ground Total Square Footage - Approx. ${belowGroundTotal} sq. ft. \n
@@ -156,12 +160,12 @@ Main Floor Total Square Footage - Approx. ${mainFloorTotal} sq. ft. \n\n\n`;
             }
             
             if (totalGarage > 0) { 
-                template += `Garage door\n`;
+                template += `Garage door`;
                 if (detachedGarageDoor) {
-                    template += `\tDetached - ${detachedGarageDoor}`
+                    template += `\n\tDetached - ${detachedGarageDoor}`
                 }
                 if (attachedGarageDoor) {
-                    template += `\tAttached - ${attachedGarageDoor}`
+                    template += `\n\tAttached - ${attachedGarageDoor}`
                 }
             }
             
