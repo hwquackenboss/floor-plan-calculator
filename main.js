@@ -3,22 +3,22 @@ function getFloorCheckboxes(floorPrefix) {
             const unfinishedRooms = [];
 
             // Special areas
-            if (document.getElementById(`${floorPrefix}-attic`).checked) specialAreas.push('the attic');
-            if (document.getElementById(`${floorPrefix}-open-below`).checked) specialAreas.push('the open to below area');
-            if (document.getElementById(`${floorPrefix}-under-five`).checked) specialAreas.push('the area under five feet in height');
-            if (document.getElementById(`${floorPrefix}-crawlspace`).checked) specialAreas.push('the crawlspace');
-            if (document.getElementById(`${floorPrefix}-shed`).checked) specialAreas.push('the shed');
+            if (document.getElementById(`${floorPrefix}-attic`).checked) specialAreas.push('attic');
+            if (document.getElementById(`${floorPrefix}-open-below`).checked) specialAreas.push('open to below area');
+            if (document.getElementById(`${floorPrefix}-under-five`).checked) specialAreas.push('area under five feet in height');
+            if (document.getElementById(`${floorPrefix}-crawlspace`).checked) specialAreas.push('crawlspace');
+            if (document.getElementById(`${floorPrefix}-shed`).checked) specialAreas.push('shed');
 
             // Unfinished rooms
-            if (document.getElementById(`${floorPrefix}-porch`).checked) unfinishedRooms.push('the porch');
-            if (document.getElementById(`${floorPrefix}-utility`).checked) unfinishedRooms.push('the utility room');
-            if (document.getElementById(`${floorPrefix}-laundry`).checked) unfinishedRooms.push('the laundry room');
-            if (document.getElementById(`${floorPrefix}-storage`).checked) unfinishedRooms.push('the storage room');
-            if (document.getElementById(`${floorPrefix}-utility-laundry`).checked) unfinishedRooms.push('the utility/laundry room');
-            if (document.getElementById(`${floorPrefix}-utility-storage`).checked) unfinishedRooms.push('the utility/storage room');
-            if (document.getElementById(`${floorPrefix}-laundry-storage`).checked) unfinishedRooms.push('the laundry/storage room');
-            if (document.getElementById(`${floorPrefix}-entry`).checked) unfinishedRooms.push('the entry');
-            if (document.getElementById(`${floorPrefix}-other`).checked) unfinishedRooms.push('the other unfinished areas');
+            if (document.getElementById(`${floorPrefix}-porch`).checked) unfinishedRooms.push('porch');
+            if (document.getElementById(`${floorPrefix}-utility`).checked) unfinishedRooms.push('utility room');
+            if (document.getElementById(`${floorPrefix}-laundry`).checked) unfinishedRooms.push('laundry room');
+            if (document.getElementById(`${floorPrefix}-storage`).checked) unfinishedRooms.push('storage room');
+            if (document.getElementById(`${floorPrefix}-utility-laundry`).checked) unfinishedRooms.push('utility/laundry room');
+            if (document.getElementById(`${floorPrefix}-utility-storage`).checked) unfinishedRooms.push('utility/storage room');
+            if (document.getElementById(`${floorPrefix}-laundry-storage`).checked) unfinishedRooms.push('laundry/storage room');
+            if (document.getElementById(`${floorPrefix}-entry`).checked) unfinishedRooms.push('entry');
+            if (document.getElementById(`${floorPrefix}-other`).checked) unfinishedRooms.push('other unfinished areas');
 
             return { specialAreas, unfinishedRooms };
         }
@@ -53,6 +53,9 @@ function getFloorCheckboxes(floorPrefix) {
             };
 
             const detachedGarage = parseFloat(document.getElementById('detached-garage').value) || 0;
+            const detachedGarageDoor = document.getElementById('detached-garage-door').value || "";
+            const attachedGarageDoor = document.getElementById('attached-garage-door').value || "";
+            const garageDimensions = document.getElementById('garage-dimensions').value || 0;
             const externalBuildings = parseFloat(document.getElementById('external-buildings').value) || 0;
 
             // Get checkboxes for each floor
@@ -86,14 +89,14 @@ function getFloorCheckboxes(floorPrefix) {
             function generateFloorDescription(floorName, floorData, hasGarage, specialAreas, unfinishedRooms) {
                 if (floorData.total === 0) return '';
                 
-                let description = `${floorName} level - Approx. ${floorData.total} sq. ft. This includes all areas of ${floorName.toLowerCase()} level.`;
+                let description = `${floorName} level - Approx. ${floorData.total} sq. ft. This includes all areas of the ${floorName.toLowerCase()} level.`;
                 
                 const exclusions = [];
                 
                 // Add garage exclusion if present
                 if (hasGarage && floorData.noGarage !== floorData.total) {
                     exclusions.push('garage');
-                    description += ` Approx. ${floorData.noGarage} sq. ft. This includes all areas of ${floorName.toLowerCase()} level excluding the garage.`;
+                    description += ` Approx. ${floorData.noGarage} sq. ft. This includes all areas of the ${floorName.toLowerCase()} level excluding the garage.`;
                 }
                 
                 // Add special areas exclusion if present
@@ -101,7 +104,7 @@ function getFloorCheckboxes(floorPrefix) {
                     exclusions.push(...specialAreas);
                     const exclusionText = exclusions.length === 1 ? exclusions[0] : 
                         exclusions.slice(0, -1).join(', ') + ', and the ' + exclusions[exclusions.length - 1];
-                    description += ` Approx. ${floorData.noSpecials} sq. ft. This includes all areas of ${floorName.toLowerCase()} level excluding the ${exclusionText}.`;
+                    description += ` Approx. ${floorData.noSpecials} sq. ft. This includes all areas of the ${floorName.toLowerCase()} level excluding the ${exclusionText}.`;
                 }
                 
                 // Add unfinished rooms exclusion if present
@@ -109,7 +112,7 @@ function getFloorCheckboxes(floorPrefix) {
                     exclusions.push(...unfinishedRooms);
                     const exclusionText = exclusions.length === 1 ? exclusions[0] : 
                         exclusions.slice(0, -1).join(', ') + ', and the ' + exclusions[exclusions.length - 1];
-                    description += ` Approx. ${floorData.finished} sq. ft. This includes all areas of ${floorName.toLowerCase()} level excluding the ${exclusionText}.`;
+                    description += ` Approx. ${floorData.finished} sq. ft. This includes all areas of the ${floorName.toLowerCase()} level excluding the ${exclusionText}.`;
                 }
                 
                 return description;
@@ -142,32 +145,37 @@ I got the following measurements:
                     lowerCheckboxes.specialAreas, lowerCheckboxes.unfinishedRooms) + '\n';
             }
 
-            template += `
-Approx. ${totalAllFloorsNoGarage} sq. ft. This includes all areas of all levels excluding the garage.
-
-Above Ground Total Square Footage – Approx. ${aboveGroundTotal} sq. ft.
-Below Ground Total Square Footage – Approx. ${belowGroundTotal} sq. ft.
-Main Floor Total Square Footage – Approx. ${mainFloorTotal} sq. ft.`;
+            template += `\n
+Approx. ${totalAllFloorsNoGarage} sq. ft. This includes all areas of all levels excluding the garage.\n
+Above Ground Total Square Footage - Approx. ${aboveGroundTotal} sq. ft. \n
+Below Ground Total Square Footage - Approx. ${belowGroundTotal} sq. ft. \n
+Main Floor Total Square Footage - Approx. ${mainFloorTotal} sq. ft. \n\n\n`;
 
             if (totalGarage > 0) {
-                template += `\nGarage Square Feet – Approx. ${totalGarage} sq. ft.`;
+                template += `Garage Square Feet - Approx. ${totalGarage} sq. ft.\n\n`;
             }
             
-            template += `\nGarage door - 
-`;
+            if (totalGarage > 0) { 
+                template += `Garage door\n`;
+                if (detachedGarageDoor) {
+                    template += `\tDetached - ${detachedGarageDoor}`
+                }
+                if (attachedGarageDoor) {
+                    template += `\tAttached - ${attachedGarageDoor}`
+                }
+            }
             
             if (detachedGarage > 0) {
-                template += `Garage dimensions - 
-`;
+                template += `\nGarage dimensions - ${garageDimensions}`;
             }
             
-            template += `Foundation - Approx. ${foundationSqFt} sq. ft.
+            template += `\nFoundation - Approx. ${foundationSqFt} sq. ft.
 
 Above Grd Fin Sq Ft - Approx. ${aboveGrdFinSqFt} sq. ft.
 
 Below Grd Fin Sq Ft - Approx. ${belowGrdFinSqFt} sq. ft.
 
-Total Fin Sq Ft - Approx. ${totalFinSqFt} sq. ft.
+Total Fin Sq Ft - Approx. ${totalFinSqFt} sq. ft.\n
 
 Please review the above information and advise of anything that should be adjusted.
 
@@ -187,10 +195,41 @@ Thank you for your business!`;
                 const btn = document.querySelector('.copy-btn');
                 const originalText = btn.textContent;
                 btn.textContent = 'Copied!';
-                btn.style.background = '#2ecc71';
+                btn.style.background = '#rgb(34, 34, 34)';
                 setTimeout(() => {
                     btn.textContent = originalText;
-                    btn.style.background = '#27ae60';
+                    btn.style.background = '#rgb(34, 34, 34)';
                 }, 2000);
             });
+        }
+
+        function clearAllFields() {
+            // Clear all number inputs
+            const numberInputs = document.querySelectorAll('input[type="number"]');
+            numberInputs.forEach(input => {
+                input.value = '';
+            });
+            
+            // Clear all text inputs
+            const textInputs = document.querySelectorAll('input[type="text"]');
+            textInputs.forEach(input => {
+                input.value = '';
+            });
+            
+            // Uncheck all checkboxes
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            
+            // Hide the output section
+            document.getElementById('output').style.display = 'none';
+            
+            // Show a brief confirmation
+            const clearBtn = document.querySelector('.clear-btn');
+            const originalText = clearBtn.textContent;
+            clearBtn.textContent = 'Cleared!';
+            setTimeout(() => {
+                clearBtn.textContent = originalText;
+            }, 2000);
         }

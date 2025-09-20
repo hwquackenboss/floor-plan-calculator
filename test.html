@@ -3,32 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Property Measurement Template Generator</title>
+    <title>Floor Plan Measurement Calculator</title>
     <script src="./main.js"></script>
     <link rel="stylesheet" href="./main.css"></link>
 </head>
 <body>
     <div class="container">
-        <h1>Property Measurement Template Generator</h1>
+        <h1>Floor Plan Measurement Calculator</h1>
         
         <div class="input-section">
             <div class="floor-section">
                 <div class="floor-title">Main Floor</div>
                 <div class="input-group">
                     <label>Total Square Footage:</label>
-                    <input type="number" id="main-total" placeholder="Enter sq ft">
+                    <input type="text" id="main-total" placeholder="Enter sq ft">
                 </div>
                 <div class="input-group">
                     <label>No Garage Square Footage:</label>
-                    <input type="number" id="main-no-garage" class="no-garage-input" placeholder="Enter sq ft">
+                    <input type="text" id="main-no-garage" class="no-garage-input" placeholder="Enter sq ft">
                 </div>
                 <div class="input-group">
                     <label>No Specials Square Footage:</label>
-                    <input type="number" id="main-no-specials" placeholder="Enter sq ft">
+                    <input type="text" id="main-no-specials" placeholder="Enter sq ft">
                 </div>
                 <div class="input-group">
                     <label>Finished Square Footage:</label>
-                    <input type="number" id="main-finished" placeholder="Enter sq ft">
+                    <input type="text" id="main-finished" placeholder="Enter sq ft">
+                </div>
+                <div>
+                    <label>Garage Door:</label>
+                    <input type="text" id="attached-garage-door" placeholder="Enter Garage Door"/>
                 </div>
                 
                 <div class="checkbox-section">
@@ -90,15 +94,15 @@
                 <div class="floor-title">Upper Floor</div>
                 <div class="input-group">
                     <label>Total Square Footage:</label>
-                    <input type="number" id="upper-total" placeholder="Enter sq ft">
+                    <input type="text" id="upper-total" placeholder="Enter sq ft">
                 </div>
                 <div class="input-group">
                     <label>No Specials Square Footage:</label>
-                    <input type="number" id="upper-no-specials" placeholder="Enter sq ft">
+                    <input type="text" id="upper-no-specials" placeholder="Enter sq ft">
                 </div>
                 <div class="input-group">
                     <label>Finished Square Footage:</label>
-                    <input type="number" id="upper-finished" placeholder="Enter sq ft">
+                    <input type="text" id="upper-finished" placeholder="Enter sq ft">
                 </div>
                 
                 <div class="checkbox-section">
@@ -160,15 +164,15 @@
                 <div class="floor-title">Top Floor</div>
                 <div class="input-group">
                     <label>Total Square Footage:</label>
-                    <input type="number" id="top-total" placeholder="Enter sq ft">
+                    <input type="text" id="top-total" placeholder="Enter sq ft">
                 </div>
                 <div class="input-group">
                     <label>No Specials Square Footage:</label>
-                    <input type="number" id="top-no-specials" placeholder="Enter sq ft">
+                    <input type="text" id="top-no-specials" placeholder="Enter sq ft">
                 </div>
                 <div class="input-group">
                     <label>Finished Square Footage:</label>
-                    <input type="number" id="top-finished" placeholder="Enter sq ft">
+                    <input type="text" id="top-finished" placeholder="Enter sq ft">
                 </div>
                 
                 <div class="checkbox-section">
@@ -230,19 +234,23 @@
                 <div class="floor-title">Lower Floor</div>
                 <div class="input-group">
                     <label>Total Square Footage:</label>
-                    <input type="number" id="lower-total" placeholder="Enter sq ft">
+                    <input type="text" id="lower-total" placeholder="Enter sq ft">
                 </div>
                 <div class="input-group">
                     <label>No Garage Square Footage:</label>
-                    <input type="number" id="lower-no-garage" class="no-garage-input" placeholder="Enter sq ft">
+                    <input type="text" id="lower-no-garage" class="no-garage-input" placeholder="Enter sq ft">
                 </div>
                 <div class="input-group">
                     <label>No Specials Square Footage:</label>
-                    <input type="number" id="lower-no-specials" placeholder="Enter sq ft">
+                    <input type="text" id="lower-no-specials" placeholder="Enter sq ft">
                 </div>
                 <div class="input-group">
                     <label>Finished Square Footage:</label>
-                    <input type="number" id="lower-finished" placeholder="Enter sq ft">
+                    <input type="text" id="lower-finished" placeholder="Enter sq ft">
+                </div>
+                <div>
+                    <label>Garage Door: </label>
+                    <input type="text" id="attached-garage-door" placeholder="Enter Garage Door"/>
                 </div>
                 
                 <div class="checkbox-section">
@@ -306,18 +314,21 @@
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
                 <div class="input-group">
                     <label>Detached Garage (sq ft):</label>
-                    <input type="number" id="detached-garage" placeholder="Enter sq ft"> 
+                    <input type="text" id="detached-garage" placeholder="Enter sq ft"> 
                     <label>Detached Garage Door:</label>
                     <input type="text" id="detached-garage-door" placeholder="Enter garage door dimensions">
+                    <label>Detached Garage Dimensions:</label>
+                    <input type="text" id="garage-dimensions" placeholder="Enter garage dimensions">
                 </div>
                 <div class="input-group">
                     <label>External Buildings (sq ft):</label>
-                    <input type="number" id="external-buildings" placeholder="Enter sq ft">
+                    <input type="text" id="external-buildings" placeholder="Enter sq ft">
                 </div>
             </div>
         </div>
 
         <button class="generate-btn" onclick="generateTemplate()">Generate Template</button>
+        <button class="clear-btn" onclick="clearAllFields()">Clear All</button>
 
         <div id="output" style="display: none;">
             <button class="copy-btn" onclick="copyToClipboard()">Copy to Clipboard</button>

@@ -6,7 +6,7 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: black;
     min-height: 100vh;
     padding: 20px;
 }
@@ -14,7 +14,7 @@ body {
 .container {
     max-width: 1400px;
     margin: 0 auto;
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(50, 50, 50, 0.95);
     backdrop-filter: blur(10px);
     border-radius: 20px;
     padding: 30px;
@@ -23,7 +23,7 @@ body {
 
 h1 {
     text-align: center;
-    color: #2c3e50;
+    color: #af7f62;
     margin-bottom: 30px;
     font-size: 2.5em;
     font-weight: 300;
@@ -32,16 +32,16 @@ h1 {
 
 .input-section {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 30px;
     margin-bottom: 30px;
 }
 
 .floor-section {
-    background: linear-gradient(145deg, #f8f9fa, #e9ecef);
+    background: rgb(64, 64, 64);
     border-radius: 15px;
     padding: 25px;
-    border: 2px solid #dee2e6;
+    border: 2px solid #424242;
     transition: all 0.3s ease;
 }
 
@@ -53,7 +53,7 @@ h1 {
 .floor-title {
     font-size: 1.4em;
     font-weight: 600;
-    color: #495057;
+    color: #b5aa98;
     margin-bottom: 20px;
     text-align: center;
     text-transform: uppercase;
@@ -68,49 +68,51 @@ label {
     display: block;
     margin-bottom: 5px;
     font-weight: 500;
-    color: #6c757d;
+    color: #d1d1d1;
 }
 
 input[type="number"] {
     width: 100%;
     padding: 12px;
-    border: 2px solid #e9ecef;
+    border: 2px solid #323232;
     border-radius: 8px;
     font-size: 16px;
     transition: all 0.3s ease;
+    background: black;
 }
 
 input[type="number"]:focus {
     outline: none;
-    border-color: #667eea;
+    border-color: #614b2a;
     box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
 input[type="text"]{
     width: 100%;
     padding: 12px;
-    border: 2px solid #e9ecef;
+    border: 2px solid #4b4b4b;
     border-radius: 8px;
     font-size: 16px;
     transition: all 0.3s ease;
+    background: rgb(100, 100, 100);
 }
 
 input[type="text"]:focus {
     outline: none;
-    border-color: #667eea;
+    border-color: #483a20;
     box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
 .checkbox-section {
     margin-top: 20px;
     padding-top: 15px;
-    border-top: 2px solid #dee2e6;
+    border-top: 2px solid #464747;
 }
 
 .checkbox-title {
     font-size: 1.1em;
     font-weight: 600;
-    color: #495057;
+    color: #a09687;
     margin-bottom: 15px;
 }
 
@@ -124,7 +126,7 @@ input[type="text"]:focus {
     display: flex;
     align-items: center;
     padding: 8px;
-    background: rgba(255, 255, 255, 0.7);
+    background: rgba(100, 100, 100, 0.7);
     border-radius: 6px;
     transition: all 0.3s ease;
     font-size: 14px;
@@ -140,11 +142,11 @@ input[type="text"]:focus {
 }
 
 .additional-section {
-    background: linear-gradient(145deg, #e8f4f8, #d1ecf1);
+    background: rgb(64, 64, 64);
     border-radius: 15px;
     padding: 25px;
     margin-bottom: 30px;
-    border: 2px solid #bee5eb;
+    border: 2px solid rgb(64, 64, 64);
 }
 
 .generate-btn {
@@ -152,8 +154,8 @@ input[type="text"]:focus {
     width: 200px;
     margin: 30px auto;
     padding: 15px 30px;
-    background: linear-gradient(45deg, #667eea, #764ba2);
-    color: white;
+    background: rgb(34, 34, 34);
+    color: rgb(182, 182, 182);
     border: none;
     border-radius: 50px;
     font-size: 18px;
@@ -166,7 +168,6 @@ input[type="text"]:focus {
 
 .generate-btn:hover {
     transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
 }
 
 .template-output {
@@ -182,7 +183,7 @@ input[type="text"]:focus {
 }
 
 .copy-btn {
-    background: #27ae60;
+    background: rgb(34, 34, 34);
     color: white;
     border: none;
     padding: 10px 20px;
@@ -193,11 +194,22 @@ input[type="text"]:focus {
 }
 
 .copy-btn:hover {
-    background: #2ecc71;
+    background: rgb(34, 34, 34);
     transform: scale(1.05);
 }
 
-.no-garage-input {
-    background-color: #fff3cd;
-    border-color: #ffeaa7;
+.clear-btn {
+    background: rgb(34, 34, 34);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+}
+
+.clear-btn:hover {
+    background: rgb(34, 34, 34);
+    transform: scale(1.05);
 }
