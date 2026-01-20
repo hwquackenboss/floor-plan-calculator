@@ -7,21 +7,21 @@ function getFloorCheckboxes(floorPrefix) {
             const atticCheckbox = document.getElementById(`${floorPrefix}-attic`);
             const openBelowCheckbox = document.getElementById(`${floorPrefix}-open-below`);
             
-            if (atticCheckbox && atticCheckbox.checked) specialAreas.push('attic');
-            if (openBelowCheckbox && openBelowCheckbox.checked) specialAreas.push('open to below area');
-            if (document.getElementById(`${floorPrefix}-under-five`).checked) specialAreas.push('area under five feet in height');
-            if (document.getElementById(`${floorPrefix}-crawlspace`).checked) specialAreas.push('crawlspace');
-            if (document.getElementById(`${floorPrefix}-shed`).checked) specialAreas.push('shed');
+            if (atticCheckbox && atticCheckbox.checked) specialAreas.push('the attic');
+            if (openBelowCheckbox && openBelowCheckbox.checked) specialAreas.push('the open to below areas');
+            if (document.getElementById(`${floorPrefix}-under-five`).checked) specialAreas.push('areas under five feet in height');
+            if (document.getElementById(`${floorPrefix}-crawlspace`).checked) specialAreas.push('the crawlspace');
+            if (document.getElementById(`${floorPrefix}-shed`).checked) specialAreas.push('the shed');
 
             // Unfinished rooms
-            if (document.getElementById(`${floorPrefix}-porch`).checked) unfinishedRooms.push('porch');
-            if (document.getElementById(`${floorPrefix}-utility`).checked) unfinishedRooms.push('utility room');
-            if (document.getElementById(`${floorPrefix}-laundry`).checked) unfinishedRooms.push('laundry room');
-            if (document.getElementById(`${floorPrefix}-storage`).checked) unfinishedRooms.push('storage room');
-            if (document.getElementById(`${floorPrefix}-utility-laundry`).checked) unfinishedRooms.push('utility/laundry room');
-            if (document.getElementById(`${floorPrefix}-utility-storage`).checked) unfinishedRooms.push('utility/storage room');
-            if (document.getElementById(`${floorPrefix}-laundry-storage`).checked) unfinishedRooms.push('laundry/storage room');
-            if (document.getElementById(`${floorPrefix}-entry`).checked) unfinishedRooms.push('entry');
+            if (document.getElementById(`${floorPrefix}-porch`).checked) unfinishedRooms.push('the porch');
+            if (document.getElementById(`${floorPrefix}-utility`).checked) unfinishedRooms.push('the utility room');
+            if (document.getElementById(`${floorPrefix}-laundry`).checked) unfinishedRooms.push('the laundry room');
+            if (document.getElementById(`${floorPrefix}-storage`).checked) unfinishedRooms.push('the storage room');
+            if (document.getElementById(`${floorPrefix}-utility-laundry`).checked) unfinishedRooms.push('the utility/laundry room');
+            if (document.getElementById(`${floorPrefix}-utility-storage`).checked) unfinishedRooms.push('the utility/storage room');
+            if (document.getElementById(`${floorPrefix}-laundry-storage`).checked) unfinishedRooms.push('the laundry/storage room');
+            if (document.getElementById(`${floorPrefix}-entry`).checked) unfinishedRooms.push('the entry');
             if (document.getElementById(`${floorPrefix}-other`).checked) unfinishedRooms.push('other unfinished areas');
 
             return { specialAreas, unfinishedRooms };
@@ -58,9 +58,11 @@ function getFloorCheckboxes(floorPrefix) {
 
             const detachedGarage = parseFloat(document.getElementById('detached-garage').value) || 0;
             const detachedGarageDoor = document.getElementById('detached-garage-door').value || "";
-            const attachedGarageDoor = document.getElementById('attached-garage-door').value || "";
+            const attachedGarageDoorMain = document.getElementById('main-attached-garage-door').value || "";
+            const attachedGarageDoorLower = document.getElementById('lower-attached-garage-door').value || "";
             const garageDimensions = document.getElementById('garage-dimensions').value || 0;
             const externalBuildings = parseFloat(document.getElementById('external-buildings').value) || 0;
+            const internalWallsChecked = document.getElementById('internal-walls').checked;
 
             // Get checkboxes for each floor
             const mainCheckboxes = getFloorCheckboxes('main');
@@ -107,7 +109,7 @@ function getFloorCheckboxes(floorPrefix) {
                 if (specialAreas.length > 0 && floorData.noSpecials !== floorData.noGarage) {
                     exclusions.push(...specialAreas);
                     const exclusionText = exclusions.length === 1 ? exclusions[0] : 
-                        exclusions.slice(0, -1).join(', ') + ', and the ' + exclusions[exclusions.length - 1];
+                        exclusions.slice(0, -1).join(', ') + ' and ' + exclusions[exclusions.length - 1];
                     description += ` Approx. ${floorData.noSpecials} sq. ft. This includes all areas of the ${floorName.toLowerCase()} level excluding the ${exclusionText}.`;
                 }
                 
@@ -115,7 +117,7 @@ function getFloorCheckboxes(floorPrefix) {
                 if (unfinishedRooms.length > 0 && floorData.finished !== floorData.noSpecials) {
                     exclusions.push(...unfinishedRooms);
                     const exclusionText = exclusions.length === 1 ? exclusions[0] : 
-                        exclusions.slice(0, -1).join(', ') + ', and the ' + exclusions[exclusions.length - 1];
+                        exclusions.slice(0, -1).join(', ') + ' and ' + exclusions[exclusions.length - 1];
                     description += ` Approx. ${floorData.finished} sq. ft. This includes all areas of the ${floorName.toLowerCase()} level excluding the ${exclusionText}.`;
                 }
                 
@@ -149,7 +151,12 @@ I got the following measurements:
                     lowerCheckboxes.specialAreas, lowerCheckboxes.unfinishedRooms) + '\n\n';
             }
 
-            template += `
+            let internalWallsNote = '';
+            if (internalWallsChecked) {
+                internalWallsNote = `**PLEASE NOTE ALL MEASUREMENTS WERE CALCULATED FROM THE INSIDE WALLS OF THE LISTING**\n\n`;
+            }
+
+            template += `\n${internalWallsNote}
 Approx. ${totalAllFloorsNoGarage} sq. ft. This includes all areas of all levels excluding the garage.\n
 Above Ground Total Square Footage - Approx. ${aboveGroundTotal} sq. ft. \n
 Below Ground Total Square Footage - Approx. ${belowGroundTotal} sq. ft. \n
@@ -160,20 +167,22 @@ Main Floor Total Square Footage - Approx. ${mainFloorTotal} sq. ft. \n\n\n`;
             }
             
             if (totalGarage > 0) { 
-                template += `Garage door`;
                 if (detachedGarageDoor) {
-                    template += `\n\tDetached - ${detachedGarageDoor}`
+                    template += `\nGarage Door Detached - ${detachedGarageDoor}`
                 }
-                if (attachedGarageDoor) {
-                    template += `\n\tAttached - ${attachedGarageDoor}`
+                if (attachedGarageDoorMain) {
+                    template += `\nGarage Door Attached (Main) - ${attachedGarageDoorMain}`
+                }
+                if (attachedGarageDoorLower) {
+                    template += `\nGarage Door Attached (Lower) - ${attachedGarageDoorLower}`
                 }
             }
             
             if (detachedGarage > 0) {
-                template += `\nGarage dimensions - ${garageDimensions}`;
+                template += `\n\nGarage dimensions - ${garageDimensions}`;
             }
             
-            template += `\nFoundation - Approx. ${foundationSqFt} sq. ft.
+            template += `\n\nFoundation - Approx. ${foundationSqFt} sq. ft.
 
 Above Grd Fin Sq Ft - Approx. ${aboveGrdFinSqFt} sq. ft.
 
@@ -205,6 +214,19 @@ Thank you for your business!`;
                     btn.style.background = '#rgb(34, 34, 34)';
                 }, 2000);
             });
+        }
+
+        // function openGmail() {
+        //     const text = document.getElementById('template-result').textContent;
+        //     const encodedText = encodeURIComponent(text);
+        //     const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&body=${encodedText}`;
+        //     window.open(gmailUrl, '_blank');
+        // }
+
+        function openGmail() {
+            const text = document.getElementById('template-result').textContent;
+            const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&body=${encodeURIComponent(text)}`;
+            window.open(gmailUrl, 'gmail_compose');
         }
 
         function clearAllFields() {

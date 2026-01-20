@@ -32,7 +32,7 @@
                 </div>
                 <div>
                     <label>Garage Door:</label>
-                    <input type="text" id="attached-garage-door" placeholder="Enter Garage Door"/>
+                    <input type="text" id="main-attached-garage-door" placeholder="Enter Garage Door"/>
                 </div>
                 
                 <div class="checkbox-section">
@@ -250,7 +250,7 @@
                 </div>
                 <div>
                     <label>Garage Door: </label>
-                    <input type="text" id="attached-garage-door" placeholder="Enter Garage Door"/>
+                    <input type="text" id="lower-attached-garage-door" placeholder="Enter Garage Door"/>
                 </div>
                 
                 <div class="checkbox-section">
@@ -320,12 +320,17 @@
                 </div>
             </div>
         </div>
-
+        <label style="display: block; text-align: center; margin-bottom: 15px;">
+            <input type="checkbox" id="internal-walls"> Internal Walls
+        </label>
         <button class="generate-btn" onclick="generateTemplate()">Generate Template</button>
         <button class="clear-btn" onclick="clearAllFields()">Clear All</button>
 
         <div id="output" style="display: none;">
-            <button class="copy-btn" onclick="copyToClipboard()">Copy to Clipboard</button>
+            <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 10px; margin-bottom: 15px;">
+                <button class="copy-btn" onclick="copyToClipboard()">Copy to Clipboard</button>
+                <button class="copy-btn" onclick="openGmail()">Open in Gmail</button>
+            </div>
             <div class="template-output" id="template-result"></div>
         </div>
     </div>
