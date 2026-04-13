@@ -226,10 +226,10 @@ Thank you for your business!`;
 
         function openGmail() {
             const text = document.getElementById('template-result').textContent;
-            const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&body=${encodeURIComponent(text)}`;
+            const address = document.getElementById('property-address').value.trim();
+            const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&su=${encodeURIComponent(address)}&body=${encodeURIComponent(text)}`;
             window.open(gmailUrl, 'gmail_compose');
 
-            const address = document.getElementById('property-address').value.trim();
             const fileName = (address || 'output') + '.txt';
             const blob = new Blob([text], { type: 'text/plain' });
             const url = URL.createObjectURL(blob);
