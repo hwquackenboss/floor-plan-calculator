@@ -63,6 +63,7 @@ function getFloorCheckboxes(floorPrefix) {
             const garageDimensions = document.getElementById('garage-dimensions').value || 0;
             const externalBuildings = parseFloat(document.getElementById('external-buildings').value) || 0;
             const internalWallsChecked = document.getElementById('internal-walls').checked;
+            const propertyAddress = document.getElementById('property-address').value.trim();
 
             // Get checkboxes for each floor
             const mainCheckboxes = getFloorCheckboxes('main');
@@ -101,7 +102,7 @@ function getFloorCheckboxes(floorPrefix) {
                 
                 // Add garage exclusion if present
                 if (hasGarage && floorData.noGarage !== floorData.total) {
-                    exclusions.push('garage');
+                    exclusions.push('the garage');
                     description += ` Approx. ${floorData.noGarage} sq. ft. This includes all areas of the ${floorName.toLowerCase()} level excluding the garage.`;
                 }
                 
@@ -110,7 +111,7 @@ function getFloorCheckboxes(floorPrefix) {
                     exclusions.push(...specialAreas);
                     const exclusionText = exclusions.length === 1 ? exclusions[0] : 
                         exclusions.slice(0, -1).join(', ') + ' and ' + exclusions[exclusions.length - 1];
-                    description += ` Approx. ${floorData.noSpecials} sq. ft. This includes all areas of the ${floorName.toLowerCase()} level excluding the ${exclusionText}.`;
+                    description += ` Approx. ${floorData.noSpecials} sq. ft. This includes all areas of the ${floorName.toLowerCase()} level excluding ${exclusionText}.`;
                 }
                 
                 // Add unfinished rooms exclusion if present
@@ -118,14 +119,14 @@ function getFloorCheckboxes(floorPrefix) {
                     exclusions.push(...unfinishedRooms);
                     const exclusionText = exclusions.length === 1 ? exclusions[0] : 
                         exclusions.slice(0, -1).join(', ') + ' and ' + exclusions[exclusions.length - 1];
-                    description += ` Approx. ${floorData.finished} sq. ft. This includes all areas of the ${floorName.toLowerCase()} level excluding the ${exclusionText}.`;
+                    description += ` Approx. ${floorData.finished} sq. ft. This includes all areas of the ${floorName.toLowerCase()} level excluding ${exclusionText}.`;
                 }
                 
                 return description;
             }
 
             // Generate template
-            let template = `Thank you for your order.
+            let template = (propertyAddress ? propertyAddress + '\n\n' : '') + `Thank you for your order.
 
 I got the following measurements:
 
@@ -227,6 +228,16 @@ Thank you for your business!`;
             const text = document.getElementById('template-result').textContent;
             const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&body=${encodeURIComponent(text)}`;
             window.open(gmailUrl, 'gmail_compose');
+
+            const address = document.getElementById('property-address').value.trim();
+            const fileName = (address || 'output') + '.txt';
+            const blob = new Blob([text], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = fileName;
+            a.click();
+            URL.revokeObjectURL(url);
         }
 
         function clearAllFields() {
