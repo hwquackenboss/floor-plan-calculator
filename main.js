@@ -158,7 +158,6 @@ I got the following measurements:
             }
 
             template += `\n${internalWallsNote}
-Approx. ${totalAllFloorsNoGarage} sq. ft. This includes all areas of all levels excluding the garage.\n
 Above Ground Total Square Footage - Approx. ${aboveGroundTotal} sq. ft. \n
 Below Ground Total Square Footage - Approx. ${belowGroundTotal} sq. ft. \n
 Main Floor Total Square Footage - Approx. ${mainFloorTotal} sq. ft. \n\n\n`;
